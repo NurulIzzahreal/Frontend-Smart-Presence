@@ -4,6 +4,7 @@ import 'package:frontend_smart_presence/screens/auth/login_screen.dart';
 import 'package:frontend_smart_presence/screens/teacher/student_management_screen.dart';
 import 'package:frontend_smart_presence/screens/teacher/class_management_screen.dart';
 import 'package:frontend_smart_presence/screens/teacher/take_attendance_screen.dart';
+import 'package:frontend_smart_presence/screens/teacher/attendance_reports_screen.dart';
 
 class TeacherDashboardScreen extends StatefulWidget {
   const TeacherDashboardScreen({super.key});
@@ -109,14 +110,19 @@ class _TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
             Card(
               child: ListTile(
                 leading: Icon(
-                  Icons.history,
+                  Icons.analytics,
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 title: const Text('Attendance Reports'),
                 subtitle: const Text('View and export attendance reports'),
                 onTap: () {
                   // Navigate to attendance reports screen
-                  // TODO: Implement attendance reports
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AttendanceReportsScreen(),
+                    ),
+                  );
                 },
               ),
             ),

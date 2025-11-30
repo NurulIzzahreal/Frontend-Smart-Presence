@@ -32,14 +32,33 @@ A Flutter mobile application for smart attendance management with AI-powered fac
   - Confidence scoring for attendance verification
   - Manual attendance backup option for teachers
 
-### 4. Attendance Tracking
-- **Student View**:
-  - Attendance history with date, status, and confidence scores
-  - Visual indicators for present/late/absent status
-- **Teacher View**:
-  - Class-wise attendance tracking
-  - Manual attendance marking interface
-  - Attendance reports generation (planned)
+### 4. Liveness Detection (Anti-spoofing)
+- **Eye Blink Detection**: Students must blink to prove they are live
+- **Head Movement Challenges**: 
+  - Turn head left/right challenges
+  - Smile detection
+- **Multi-frame Verification**: Multiple frame analysis to prevent photo/video spoofing
+
+### 5. Geofencing & Location Verification
+- **Location-based Attendance**: 
+  - GPS verification to ensure students are at the correct location
+  - Configurable radius for attendance zones
+- **Location Tracking**: 
+  - Address resolution for attendance locations
+  - Location history for verification
+
+### 6. Attendance Reports & Analytics
+- **Comprehensive Reporting**:
+  - Daily/weekly/monthly attendance summaries
+  - Individual student attendance tracking
+  - Class-wise attendance analytics
+- **Export Functionality**:
+  - CSV export for spreadsheet analysis
+  - PDF reports for formal documentation
+- **Statistics Dashboard**:
+  - Attendance rates and trends
+  - Confidence score analysis
+  - Present/late/absent breakdowns
 
 ## Technology Stack
 
@@ -48,7 +67,11 @@ A Flutter mobile application for smart attendance management with AI-powered fac
 - **API Communication**: HTTP REST API
 - **Data Storage**: Shared Preferences for local caching
 - **Camera Integration**: Flutter camera plugin
+- **Image Processing**: Image picker for file handling
 - **File Handling**: File picker for CSV imports
+- **PDF Generation**: PDF package for report generation
+- **Geolocation**: Geolocator and Geocoding packages
+- **Permissions**: Permission handler for camera, location, and storage
 
 ## Setup Instructions
 
@@ -65,6 +88,10 @@ A Flutter mobile application for smart attendance management with AI-powered fac
 - `image_picker`: For image handling
 - `file_picker`: For CSV import functionality
 - `permission_handler`: For camera and storage permissions
+- `pdf`: For PDF report generation
+- `printing`: For PDF sharing functionality
+- `geolocator`: For location services
+- `geocoding`: For address resolution
 
 ## Project Structure
 
@@ -85,13 +112,20 @@ lib/
 
 The app communicates with a Python backend via REST APIs. All endpoints are configured to work with `http://localhost:8000/api` by default.
 
+## Security Features
+
+- **Liveness Detection**: Prevents spoofing through photo/video attacks
+- **Geofencing**: Ensures attendance is marked from authorized locations
+- **OTP Authentication**: Secure login for students
+- **Role-based Access**: Controlled access based on user roles
+
 ## Future Enhancements
 
-- Attendance reports generation
 - Push notifications for attendance reminders
 - Offline mode with sync capability
 - Enhanced analytics and insights
 - Multi-language support
+- Integration with school management systems
 
 ## Contributing
 

@@ -58,6 +58,14 @@ dependencies:
   
   # File picker for CSV import
   file_picker: ^8.0.3
+  
+  # PDF generation
+  pdf: ^3.10.4
+  printing: ^5.12.2
+  
+  # Geolocation services
+  geolocator: ^13.0.1
+  geocoding: ^3.0.0
 
 dev_dependencies:
   flutter_test:
