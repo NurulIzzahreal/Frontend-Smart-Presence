@@ -66,6 +66,13 @@ dependencies:
   # Geolocation services
   geolocator: ^13.0.1
   geocoding: ^3.0.0
+  
+  # Local notifications
+  flutter_local_notifications: ^17.2.1+1
+  
+  # Cryptography for security
+  crypto: ^3.0.3
+  encrypt: ^5.0.3
 
 dev_dependencies:
   flutter_test:

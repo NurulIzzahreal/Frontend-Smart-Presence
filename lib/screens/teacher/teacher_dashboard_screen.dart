@@ -5,6 +5,11 @@ import 'package:frontend_smart_presence/screens/teacher/student_management_scree
 import 'package:frontend_smart_presence/screens/teacher/class_management_screen.dart';
 import 'package:frontend_smart_presence/screens/teacher/take_attendance_screen.dart';
 import 'package:frontend_smart_presence/screens/teacher/attendance_reports_screen.dart';
+import 'package:frontend_smart_presence/services/notification_service.dart';
+import 'package:frontend_smart_presence/services/statistics_service.dart';
+import 'package:frontend_smart_presence/services/attendance_service.dart';
+import 'package:frontend_smart_presence/services/student_service.dart';
+import 'package:frontend_smart_presence/services/class_service.dart';
 
 class TeacherDashboardScreen extends StatefulWidget {
   const TeacherDashboardScreen({super.key});
@@ -14,6 +19,50 @@ class TeacherDashboardScreen extends StatefulWidget {
 }
 
 class _TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
+  final NotificationService _notificationService = NotificationService();
+  bool _notificationsEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeNotifications();
+  }
+
+  Future<void> _initializeNotifications() async {
+    await _notificationService.initialize();
+    final enabled = await _notificationService.areNotificationsEnabled();
+    setState(() {
+      _notificationsEnabled = enabled;
+    });
+
+    if (!enabled) {
+      await _notificationService.requestNotificationPermissions();
+    }
+  }
+
+  Future<void> _checkForAbnormalAttendance() async {
+    try {
+      // In a real implementation, this would check actual attendance data
+      // For demo purposes, we'll simulate an abnormal pattern
+      await Future.delayed(const Duration(seconds: 2));
+
+      // Send notification about abnormal attendance
+      await _notificationService.sendAbnormalAttendanceNotification(
+        'Unusual attendance pattern detected in Class A',
+        5, // Number of affected students
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Abnormal attendance notification sent'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      print('Error checking for abnormal attendance: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +71,15 @@ class _TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         actions: [
+          IconButton(
+            icon: Icon(
+              _notificationsEnabled
+                  ? Icons.notifications_active
+                  : Icons.notifications_off,
+              color: _notificationsEnabled ? Colors.white : Colors.red,
+            ),
+            onPressed: _initializeNotifications,
+          ),
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
@@ -124,6 +182,18 @@ class _TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                     ),
                   );
                 },
+              ),
+            ),
+            const SizedBox(height: 16),
+            Card(
+              child: ListTile(
+                leading: Icon(
+                  Icons.warning,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                title: const Text('Check Abnormal Attendance'),
+                subtitle: const Text('Detect unusual attendance patterns'),
+                onTap: _checkForAbnormalAttendance,
               ),
             ),
           ],

@@ -60,6 +60,31 @@ A Flutter mobile application for smart attendance management with AI-powered fac
   - Confidence score analysis
   - Present/late/absent breakdowns
 
+### 7. Dashboard Guru/Admin (Web atau Mobile Admin)
+- **Tampilan statistik kehadiran**:
+  - Visual dashboard with attendance metrics
+  - Real-time statistics and trends
+  - Class and student performance overview
+- **Notifikasi siswa absen/telat**:
+  - Automatic alerts for abnormal attendance patterns
+  - Real-time notifications for teachers
+
+### 8. Notifikasi & Alert
+- **Push notification untuk guru saat jumlah absen abnormal**:
+  - Instant alerts for unusual attendance patterns
+  - Customizable thresholds for notifications
+- **Email / Notifikasi untuk wali jika ada ketidakhadiran**:
+  - Automated parent notifications for student absences
+  - Multi-channel notification system (mobile, email, SMS)
+
+### 9. Keamanan & Privasi
+- **Enkripsi data sensitif (mis. token)**:
+  - AES-256 encryption for sensitive data
+  - Secure token storage and management
+- **Hak akses API**:
+  - Role-based access control for all API endpoints
+  - Granular permissions for different user types
+
 ## Technology Stack
 
 - **Frontend**: Flutter with Dart
@@ -72,6 +97,8 @@ A Flutter mobile application for smart attendance management with AI-powered fac
 - **PDF Generation**: PDF package for report generation
 - **Geolocation**: Geolocator and Geocoding packages
 - **Permissions**: Permission handler for camera, location, and storage
+- **Notifications**: Flutter Local Notifications for push notifications
+- **Security**: Crypto and Encrypt packages for data protection
 
 ## Setup Instructions
 
@@ -92,6 +119,9 @@ A Flutter mobile application for smart attendance management with AI-powered fac
 - `printing`: For PDF sharing functionality
 - `geolocator`: For location services
 - `geocoding`: For address resolution
+- `flutter_local_notifications`: For push notifications
+- `crypto`: For cryptographic functions
+- `encrypt`: For data encryption
 
 ## Project Structure
 
@@ -118,6 +148,14 @@ The app communicates with a Python backend via REST APIs. All endpoints are conf
 - **Geofencing**: Ensures attendance is marked from authorized locations
 - **OTP Authentication**: Secure login for students
 - **Role-based Access**: Controlled access based on user roles
+- **Data Encryption**: AES-256 encryption for sensitive data
+- **Secure Token Management**: Encrypted token storage
+
+## Notification System
+
+- **Teacher Notifications**: Alerts for abnormal attendance patterns
+- **Parent Notifications**: Automated alerts for student absences
+- **System Notifications**: General system updates and reminders
 
 ## Future Enhancements
 
@@ -126,6 +164,7 @@ The app communicates with a Python backend via REST APIs. All endpoints are conf
 - Enhanced analytics and insights
 - Multi-language support
 - Integration with school management systems
+- Web-based admin dashboard
 
 ## Contributing
 

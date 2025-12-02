@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/user.dart';
+import 'package:frontend_smart_presence/models/user.dart';
+import 'package:frontend_smart_presence/services/security_service.dart';
 
 class AuthService {
   static const String baseUrl =
@@ -10,6 +11,7 @@ class AuthService {
 
   String? _token;
   User? _currentUser;
+  final SecurityService _securityService = SecurityService();
 
   // Singleton pattern
   static final AuthService _instance = AuthService._internal();
@@ -32,9 +34,10 @@ class AuthService {
         _token = data['token'];
         _currentUser = User.fromJson(data['user']);
 
-        // Save token to shared preferences
+        // Save encrypted token to shared preferences
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('token', _token!);
+        final encryptedToken = _securityService.encryptData(_token!);
+        await prefs.setString('token', encryptedToken);
         await prefs.setString('user', jsonEncode(_currentUser!.toJson()));
 
         return true;
@@ -60,9 +63,10 @@ class AuthService {
         _token = data['token'];
         _currentUser = User.fromJson(data['user']);
 
-        // Save token to shared preferences
+        // Save encrypted token to shared preferences
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('token', _token!);
+        final encryptedToken = _securityService.encryptData(_token!);
+        await prefs.setString('token', encryptedToken);
         await prefs.setString('user', jsonEncode(_currentUser!.toJson()));
 
         return true;
@@ -103,9 +107,10 @@ class AuthService {
         _token = data['token'];
         _currentUser = User.fromJson(data['user']);
 
-        // Save token to shared preferences
+        // Save encrypted token to shared preferences
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('token', _token!);
+        final encryptedToken = _securityService.encryptData(_token!);
+        await prefs.setString('token', encryptedToken);
         await prefs.setString('user', jsonEncode(_currentUser!.toJson()));
 
         return true;
@@ -129,11 +134,11 @@ class AuthService {
 
   Future<bool> isAuthenticated() async {
     final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    final encryptedToken = prefs.getString('token');
     final userJson = prefs.getString('user');
 
-    if (token != null && userJson != null) {
-      _token = token;
+    if (encryptedToken != null && userJson != null) {
+      _token = _securityService.decryptData(encryptedToken);
       _currentUser = User.fromJson(jsonDecode(userJson));
       return true;
     }
